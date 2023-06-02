@@ -16,7 +16,8 @@ jobs:
       - name: Build and push Docker image
         run: |
           sudo docker build -t my-app .
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > keypair.pem       
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > keypair.pem 
+          chmod 400 keypair.pem
           sudo docker save my-app | ssh -i keypair.pem ubuntu@54.243.13.32 "docker load"
 
       - name: SSH into EC2 instance and run Docker container
