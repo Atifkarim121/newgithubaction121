@@ -19,11 +19,12 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > mykey.pem 
           sudo docker save my-app | ssh -i mykey.pem ubuntu@54.243.13.32 "docker load"
 
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      - name: Update known hosts
+        run: ssh-keyscan -H 3.83.148.215 >> ~/.ssh/known_hosts
+
       - name: SSH into EC2 instance and run Docker container
-        uses: appleboy/ssh-action@master
-        with:
-          host: 3.83.148.215
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker run -d -p 8081:8081 my-app
+        run: |
+          sshpass -p '' ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@3.83.148.215 "docker run -d -p 8081:8081 my-app"
