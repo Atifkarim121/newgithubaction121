@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Create SSH directory
+        run: mkdir -p ~/.ssh
+
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
@@ -28,3 +31,4 @@ jobs:
       - name: SSH into EC2 instance and run Docker container
         run: |
           sshpass -p '' ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@3.83.148.215 "docker run -d -p 8081:8081 my-app"
+
