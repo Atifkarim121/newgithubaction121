@@ -13,16 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-    
       - name: Build and push Docker image
         run: |
           sudo docker build -t my-app .
-          echo ${{ secrets.SSH_PRIVATE_KEY }} | base64 -d > mykey.pem
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > mykey.pem
           sudo chmod 600 mykey.pem
           sudo docker save my-app | ssh -i mykey.pem ubuntu@3.83.148.215 "docker load"
 
       - name: SSH into EC2 instance and run Docker container
         run: |
-          echo ${{ secrets.SSH_PRIVATE_KEY }} | base64 -d > mykey.pem
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > mykey.pem
           sudo chmod 600 mykey.pem
           ssh -i mykey.pem ubuntu@3.83.148.215 "docker run -d -p 8081:8081 my-app"
