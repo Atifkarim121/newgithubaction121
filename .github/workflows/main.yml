@@ -19,6 +19,10 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > keypair.pem
           sudo docker save my-app | ssh -v -i keypair.pem ubuntu@54.243.13.32 "docker load"
 
+      - name: Fetch EC2 instance host key
+        run: |
+          ssh-keyscan -H 54.243.13.32 >> ~/.ssh/known_hosts
+
       - name: SSH into EC2 instance and run Docker container
         uses: appleboy/ssh-action@master
         with:
