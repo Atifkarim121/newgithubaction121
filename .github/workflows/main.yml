@@ -17,6 +17,14 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Run commands on the EC2 instance
-            echo "Hello, EC2 instance!"
-            # Add more commands as needed
+          
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t my-app .
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 8081:8081 --name my-app-container my-app
