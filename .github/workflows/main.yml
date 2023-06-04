@@ -17,7 +17,7 @@ jobs:
         run: |
           sudo docker build -t my-app .
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > keypair.pem
-          sudo docker save my-app | ssh -i keypair.pem ubuntu@54.243.13.32 "docker load"
+          sudo docker save my-app | ssh -v -i keypair.pem ubuntu@54.243.13.32 "docker load"
 
       - name: SSH into EC2 instance and run Docker container
         uses: appleboy/ssh-action@master
@@ -26,6 +26,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -x
             docker run -d -p 8081:8081 my-app
-
 
