@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: SSH into EC2
 
 on:
   push:
@@ -10,26 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Build and push Docker image
-        run: |
-          sudo docker build -t my-app .
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > keypair.pem
-          sudo docker save my-app | ssh -v -i keypair.pem ubuntu@54.243.13.32 "docker load"
-
-      - name: Fetch EC2 instance host key
-        run: |
-          ssh-keyscan -H 54.243.13.32 >> ~/.ssh/known_hosts
-
-      - name: SSH into EC2 instance and run Docker container
+      - name: SSH into EC2 instance
         uses: appleboy/ssh-action@master
         with:
           host: 54.243.13.32
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            set -x
-            docker run -d -p 8081:8081 my-app
-
+            # Run commands on the EC2 instance
+            echo "Hello, EC2 instance!"
+            # Add more commands as needed
