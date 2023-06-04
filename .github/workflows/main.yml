@@ -17,14 +17,16 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-          
+            # Add your SSH commands or scripts here if needed
+
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Clone repository
+        run: git clone https://github.com/Atifkarim121/newgithubaction121.git
+
       - name: Build Docker image
-        run: |
-          docker build -t my-app1 .
+        run: docker build -t my-app1 .
 
       - name: Run Docker container
-        run: |
-          docker run -d -p 8000:8000 my-app1
+        run: docker run -d -p 8000:8000 my-app1
