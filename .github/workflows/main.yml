@@ -13,7 +13,7 @@ jobs:
       - name: SSH into EC2 instance
         uses: appleboy/ssh-action@master
         with:
-          host: 54.82.46.229
+          host: 3.93.56.250
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
@@ -24,7 +24,7 @@ jobs:
 
       - name: Clone repository
         run: git clone https://github.com/Atifkarim121/newgithubaction121.git
-
+  
       - name: Build Docker image
         run: docker build -t my-app1 .
 
