@@ -20,8 +20,8 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@ec2-107-20-26-129.compute-1.amazonaws.com 'git clone https://github.com/Atifkarim121/newgithubaction121.git'
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@ec2-107-20-26-129.compute-1.amazonaws.com 'cd newgithubaction121 && docker build -t java:latest .'
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@ec2-107-20-26-129.compute-1.amazonaws.com 'docker stop your-container-name || true'
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@ec2-107-20-26-129.compute-1.amazonaws.com 'docker rm your-container-name || true'
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@ec2-107-20-26-129.compute-1.amazonaws.com 'docker run -d --name your-container-name -p 8081:8081 java:latest'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@107-20-26-129 'git clone https://github.com/Atifkarim121/newgithubaction121.git'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@107-20-26-129 'cd newgithubaction121 && docker build -t java:latest .'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@107-20-26-129 'docker stop your-container-name || true'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@107-20-26-129 'docker rm your-container-name || true'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY_ID }} ubuntu@107-20-26-129 'docker run -d --name your-container-name -p 8081:8081 java:latest'
